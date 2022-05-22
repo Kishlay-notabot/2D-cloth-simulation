@@ -34,7 +34,7 @@ draw_options = pymunk.pygame_util.DrawOptions(screen)
 box_size = 200
 w = screen.get_width()
 h = screen.get_height()
-for i in range(6):
+for i in range(2):
     sw = pymunk.Segment(space.static_body, (0, i * box_size), (w, i * box_size), 1)
     sw.friction = 1
     sw.elasticity = 1
