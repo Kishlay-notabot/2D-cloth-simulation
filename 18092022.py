@@ -23,6 +23,8 @@ def wall(space, wid, hei):
         body = pymunk.Body(body_type=pymunk.Body.STATIC)
         body.position = pos
         shape  = pymunk.Poly.create_box(body, size)
+        shape.elasticity = 0.4
+        shape.friction = 0.5
         space.add(body, shape)
 
 def create_ball(space, radius, mass):
@@ -32,6 +34,8 @@ def create_ball(space, radius, mass):
     shape.mass = mass
     shape.color = (55, 0, 0, 100)
     space.add(body, shape)
+    shape.elasticity = 0.9
+    shape.friction = 0.4
     return shape
 
 
