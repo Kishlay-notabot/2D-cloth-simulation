@@ -2,6 +2,7 @@ from intro import space, App
 import pymunk
 
 b0 = space.static_body 
+space.gravity = (0, 981)
 
 b1 = pymunk.Body(mass=1, moment=10)
 b1.position = (100, 200)
