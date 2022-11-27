@@ -59,7 +59,7 @@ def create_ball_a(xloc, yloc):
     shape.elasticity = 0.9
     shape.friction = 0.4
     return shape
-
+# ---- novmeber update simplified functions just to have 2 parameters of x and y location
 def create_ball_b(xloc, yloc):
     radius = 20
     mass = 10
