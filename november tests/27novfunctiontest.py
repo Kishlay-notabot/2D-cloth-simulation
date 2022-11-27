@@ -25,13 +25,13 @@ def wall(space, wid, hei):
         shape.elasticity = 0.4
         shape.friction = 0.5
         space.add(body, shape)
-#BIG BALL
+
 def create_ball(space, radius, mass):
     body = pymunk.Body()
     body.position = (500, 350)
     shape = pymunk.Circle(body, radius)
     shape.mass = mass
-    shape.color = (0, 0, 0, 100)
+    shape.color = (0, 200, 0, 100)
     space.add(body, shape)
     shape.elasticity = 0.9
     shape.friction = 0.4
@@ -45,30 +45,39 @@ def add_ball(space):
     shape.friction = 0.7
     space.add(body, shape)
     return body
-#KNOT 1
-def create_ball_a(space, radius, mass):
-    body = pymunk.Body(body_type=pymunk.Body.STATIC)
-    body.position = (500, 300)
-    shape = pymunk.Circle(body, radius)
-    shape.mass = mass
-    shape.color = (0, 0, 0, 0)
-    space.add(body, shape)
-    shape.elasticity = 0.9
-    shape.friction = 0.4
-    return shape
-#KNOT 2
-def create_ball_b(space, mass, x_knot,y_knot):
-    body = pymunk.Body(body_type=pymunk.Body.STATIC)
+
+def create_ball_a(xloc, yloc):
     radius = 5
-    body.position = (x_knot, y_knot)
+    mass = 10
+    space = pymunk.Space()
+    body = pymunk.Body(body_type=pymunk.Body.STATIC)
+    body.position = (xloc, yloc)
     shape = pymunk.Circle(body, radius)
     shape.mass = mass
-    shape.radius = radius
-    shape.color = (55, 0, 0, 100)
+    shape.color = (0, 70, 0, 100)
     space.add(body, shape)
     shape.elasticity = 0.9
     shape.friction = 0.4
     return shape
+
+def create_ball_b(xloc, yloc):
+    radius = 20
+    mass = 10
+    space = pymunk.Space()
+    body = pymunk.Body(body_type=pymunk.Body.STATIC)
+    body.position = (xloc, yloc)
+    shape = pymunk.Circle(body, radius)
+    shape.mass = mass
+    shape.color = (0, 0, 0, 100)
+    space.add(body, shape)
+    shape.elasticity = 0.9
+    shape.friction = 0.4
+    return shape
+# def add_spring(var1, var2):
+#     dlx = pymunk.DampedSpring(var1, var2, (0, 0), (0, 0), 5, 70, 0)
+#     space.add(dlx)
+
+
 
 def run(window, wid, hei):
     run = True
@@ -76,15 +85,13 @@ def run(window, wid, hei):
     fps = 60
     dt = 1 / fps
     space = pymunk.Space()
-    space.gravity = (0, 581)
-    #main-object-------------------------
+    space.gravity = (0, 981)
     big_ball = create_ball(space, 30, 10)
-    #knots---------------------------------
-    joina = create_ball_a(space, 5, 10)
-    joinb = create_ball_b(space, 10, 200, 100)
-    j = pymunk.DampedSpring(big_ball.body, joina.body, (0, 0), (0, 0), 5, 70, 0)
+    joina = create_ball_a(700, 100)
+    joinb = create_ball_b(100, 100)
+    j = pymunk.DampedSpring(joinb.body, joina.body, (0, 0), (0, 0), 1, 100, 0)
     space.add(j)
-    space.add(pymunk.DampedSpring(big_ball.body, joinb.body, (0, 0), (0, 0), 100, 100, 10))
+    # space.add(pymunk.DampedSpring(big_ball.body, joinb.body, (0, 0), (0, 0), 100, 100, 10))
     wall(space, wid, hei)
     draw_options = pymunk.pygame_util.DrawOptions(window)
 
