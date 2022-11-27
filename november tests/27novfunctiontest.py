@@ -77,7 +77,7 @@ def create_ball_b(xloc, yloc):
 #     dlx = pymunk.DampedSpring(var1, var2, (0, 0), (0, 0), 5, 70, 0)
 #     space.add(dlx)
 
-
+# next task to make a function to initiate grid plotting of objects and also work with connection of constrains, also changing the constraint color or view 
 
 def run(window, wid, hei):
     run = True
