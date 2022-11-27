@@ -140,3 +140,5 @@ def run(WIDTH, HEIGHT):
 
 if __name__ == "__main__":
     run(WIDTH, HEIGHT)
+
+    # this is from stack overflow, PEP8 syntax

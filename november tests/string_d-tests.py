@@ -100,3 +100,7 @@ def run(window, wid, hei):
 
 if __name__ == "__main__":
     run(window, wid, hei)
+
+
+
+# 27 november file is one edit ahead of this, both are test files not main projects
