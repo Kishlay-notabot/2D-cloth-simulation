@@ -31,7 +31,7 @@ def create_ball(space, radius, mass):
     body.position = (500, 350)
     shape = pymunk.Circle(body, radius)
     shape.mass = mass
-    shape.color = (55, 0, 0, 100)
+    shape.color = (0, 150, 0, 0)
     space.add(body, shape)
     shape.elasticity = 0.9
     shape.friction = 0.4
@@ -80,7 +80,7 @@ def run(window, wid, hei):
     dt = 1 / fps
     space = pymunk.Space()
     space.gravity = (0, 981)
-    big_ball = create_ball(space, 30, 10)
+    big_ball = create_ball(space, 10, 10)
     joina = create_ball_a(space, 5, 10)
     joinb = create_ball_b(space, 5, 10)
     j = pymunk.DampedSpring(big_ball.body, joina.body, (0, 0), (0, 0), 5, 70, 0)
