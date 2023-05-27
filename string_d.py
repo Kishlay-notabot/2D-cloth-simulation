@@ -83,6 +83,16 @@ def run(window, wid, hei):
     big_ball = create_ball(space, 10, 10)
     joina = create_ball_a(space, 5, 10)
     joinb = create_ball_b(space, 5, 10)
+    #DO NOT CHANGE ABOVE
+
+    #May 27 continued test
+    # testballbduplicate = create_ball_a(space,5, 10)
+    # addtestconstraint = pymunk.DampedSpring(joinb.body, testballbduplicate.body,(0,0), (0,0), 7, 80, 0)
+    # space.add(addtestconstraint)
+    # space.add
+
+
+    #DO NOT CHANGE BELOW
     j = pymunk.DampedSpring(big_ball.body, joina.body, (0, 0), (0, 0), 5, 70, 0)
     space.add(j)
     space.add(pymunk.DampedSpring(big_ball.body, joinb.body, (0, 0), (0, 0), 100, 100, 10))
