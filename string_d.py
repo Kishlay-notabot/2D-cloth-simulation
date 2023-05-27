@@ -85,11 +85,60 @@ def run(window, wid, hei):
     joinb = create_ball_b(space, 5, 10)
     #DO NOT CHANGE ABOVE
 
+
+
     #May 27 continued test
-    # testballbduplicate = create_ball_a(space,5, 10)
-    # addtestconstraint = pymunk.DampedSpring(joinb.body, testballbduplicate.body,(0,0), (0,0), 7, 80, 0)
-    # space.add(addtestconstraint)
-    # space.add
+    #INDEPENDENT BODY WITHOUT PREDEFINED
+    space = space
+    radius = 77
+    mybod = pymunk.Body()
+    mybod.position = (300, 300)
+    shape = pymunk.Circle(mybod, radius)
+    shape.mass = 1
+    shape.color = (55, 34, 57, 123)
+    space.add(mybod, shape)
+    shape.elasticity = 0.9
+    shape.friction = 0.4
+    
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     #DO NOT CHANGE BELOW
