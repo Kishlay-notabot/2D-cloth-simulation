@@ -1,193 +1,120 @@
 import pygame
-import pymunk
-import pymunk.pygame_util
-import math
+from pygame.locals import *
+import random
+import time
+
+from datetime import datetime
 
 pygame.init()
-wid, hei = 800, 700
-window = pygame.display.set_mode((wid, hei))
 
+# basic initialisation stuff
+display_size = (1000,650)
+display = pygame.display.set_mode(display_size)
+pygame.display.set_caption("Painting App with pygame")
+clock = pygame.time.Clock()
+font = pygame.font.Font("C:\\Windows\\Fonts\\Arial.ttf", 18)
 
-def draw(space, window, draw_options):
-    window.fill("white")
-    space.debug_draw(draw_options)
-    pygame.display.update()
+square_selected = False
+# colors
+white = (255,255,255)
+black = (0,0,0)
+red = (255,0,0)
+green = (0,255,0)
+blue = (0,0,255)
+yellow = (255,255,0)
+cyan = (0,255,255)
+purple = (255,0,255)
+random_color = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
+colors = [black,red,green,blue,yellow,cyan,purple,random_color]
 
-def wall(space, wid, hei):
-    rects = [
-        [(wid/2, hei - 10), (wid, 20)],
-        [(wid/2, 10), (wid, 20)]
-    ]
-    for pos, size in rects:
-        body = pymunk.Body(body_type=pymunk.Body.STATIC)
-        body.position = pos
-        shape  = pymunk.Poly.create_box(body, size)
-        shape.elasticity = 0.4
-        shape.friction = 0.5
-        space.add(body, shape)
+text = font.render("Clear screen", True, black, (255,255,230))
+text_rect = text.get_rect()
+text_rect.center = (900, 10)
+display.fill(white)
 
-def create_ball(space, radius, mass):
-    body = pymunk.Body()
-    body.position = (500, 350)
-    shape = pymunk.Circle(body, radius)
-    shape.mass = mass
-    shape.color = (0, 150, 0, 0)
-    space.add(body, shape)
-    shape.elasticity = 0.9
-    shape.friction = 0.4
-    return shape
+def save_image():
+    w = display_size[0]-50
+    h = display_size[1]-20
+    rect = pygame.Rect(50,20,w,h)
+    sub = display.subsurface(rect)
+    screenshot = pygame.Surface((w,h))
+    screenshot.blit(sub,(0,0))
+    return screenshot
 
-def add_ball(space):
-    body = pymunk.Body()
-    body.position = (500, 500)
-    shape = pymunk.Circle(body, 20)
-    shape.mass = 1
-    shape.friction = 0.7
-    space.add(body, shape)
-    return body
-
-def create_ball_a(space, radius, mass):
-    body = pymunk.Body(body_type=pymunk.Body.STATIC)
-    body.position = (500, 300)
-    shape = pymunk.Circle(body, radius)
-    shape.mass = mass
-    shape.color = (55, 0, 0, 100)
-    space.add(body, shape)
-    shape.elasticity = 0.9
-    shape.friction = 0.4
-    return shape
-
-def create_ball_b(space, radius, mass):
-    body = pymunk.Body(body_type=pymunk.Body.STATIC)
-    body.position = (550, 300)
-    shape = pymunk.Circle(body, radius)
-    shape.mass = mass
-    shape.color = (55, 0, 0, 100)
-    space.add(body, shape)
-    shape.elasticity = 0.9
-    shape.friction = 0.4
-    return shape
-# def add_spring(var1, var2):
-#     dlx = pymunk.DampedSpring(var1, var2, (0, 0), (0, 0), 5, 70, 0)
-#     space.add(dlx)
-
-
-
-def run(window, wid, hei):
-    run = True
-    clock = pygame.time.Clock()
-    fps = 60
-    dt = 1 / fps
-    space = pymunk.Space()
-    space.gravity = (0, 981)
-    big_ball = create_ball(space, 10, 10)
-    joina = create_ball_a(space, 5, 10)
-    joinb = create_ball_b(space, 5, 10)
-    #DO NOT CHANGE ABOVE
-
-
-
-    #May 27 continued test
-    #INDEPENDENT BODY WITHOUT PREDEFINED
-    space = space
-    radius = 45
-    mybod = pymunk.Body()
-    mybod.position = (300, 300)
-    shape = pymunk.Circle(mybod, radius)
-    shape.mass = 1
-    shape.color = (55, 34, 57, 123)
-    space.add(mybod, shape)
-    shape.elasticity = 0.9
-    shape.friction = 0.4
+def main():
+    square_selected = False
+    click_num = 0
+    size = 25
+    pen_color = (255,255,0)
+    eraser_color = white
+    color_button = []
+    rect_pos = []
+    display.blit(text, text_rect)
+    for i in range(len(colors)):
+        color_button.append(pygame.Rect((5+15*i), 10, 10,10))
+        pygame.draw.rect(display, colors[i], pygame.Rect((5+15*i), 10, 10,10))
     
+    square_rect = pygame.Rect(5,35, 10,10)
+    pygame.draw.rect(display, (200,200,200), square_rect)
+    while True:
+        for event in pygame.event.get():
+            pos = pygame.mouse.get_pos()
+            keys = pygame.key.get_pressed()
+            if event.type == pygame.QUIT:
+                print("closing")
+                quit()
+                
+            if square_selected:
+                if pygame.mouse.get_pressed() == (1,0,0) and click_num != 2:
+                    click_num += 1
+                    rect_pos = rect_pos.append(pos)
+                    
+            if keys[pygame.K_KP_PLUS] and size < 200:
+                size+=1
+            if keys[pygame.K_KP_MINUS] and size != 0:
+                size-=1 
+            if (keys[pygame.K_LCTRL] and keys[pygame.K_s]) or (keys[pygame.K_RCTRL] and keys[pygame.K_s]):
+                image = save_image()
+                date = datetime.now().strftime('%Y-%m-%d %H-%M-%S')
+                pygame.image.save(image, f"{date.lower()}-image.jpg")
 
+            if pygame.mouse.get_pressed() == (1,0,0):
+                #  for i in range(len(colors)):
+                #     if color_button[i].collidepoint(pos):
+                #         color = colors[i]
+                if text_rect.collidepoint(pos):
+                	pygame.draw.rect(display, white, pygame.Rect(0,50,display_size[0],display_size[1]))
+                if not square_selected:
+                    if color_button[0].collidepoint(pos):
+                        pen_color = colors[0]
+                    if color_button[1].collidepoint(pos):
+                        pen_color = colors[1]
+                    if color_button[2].collidepoint(pos):
+                        pen_color = colors[2]
+                    if color_button[3].collidepoint(pos):
+                        pen_color = colors[3]
+                    if color_button[4].collidepoint(pos):
+                        pen_color = colors[4]
+                    if color_button[5].collidepoint(pos):
+                        pen_color = colors[5]
+                    if color_button[6].collidepoint(pos):
+                        pen_color = colors[6]
+                    if color_button[7].collidepoint(pos):
+                        pen_color = colors[7]
+                if square_rect.collidepoint(pos):
+                    print("square pressed")
+                    square_selected = True
+                    time.sleep(1)
 
+                if (pos[1]-size//2) > 20 and (pos[0]-size//2) > 50:
+                    pygame.draw.rect(display, pen_color, pygame.Rect((pos[0]-size//2), (pos[1]-size//2), size, size))
+
+            if pygame.mouse.get_pressed() == (0,0,1):
+                if (pos[1]-size//2) > 20 and (pos[0]-size//2) > 50:
+                    pygame.draw.rect(display, eraser_color, pygame.Rect(((pos[0]-size//2), (pos[1]-size//2), size, size)))
     
+        pygame.display.update()
+        clock.tick(240)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    #DO NOT CHANGE BELOW
-    j = pymunk.DampedSpring(big_ball.body, joina.body, (0, 0), (0, 0), 5, 70, 0)
-    space.add(j)
-    space.add(pymunk.DampedSpring(big_ball.body, joinb.body, (0, 0), (0, 0), 100, 100, 10))
-    wall(space, wid, hei)
-    draw_options = pymunk.pygame_util.DrawOptions(window)
-
-WHITE = (255, 255, 255)
-GREEN = (0, 255, 0)
-button_clicked = False
-show_success_dot = False
-success_dot_color = GREEN
-success_dot_position = (10, 10)
-button_surface = pygame.Surface((button_width, button_height))
-button_rect = button_surface.get_rect()
-button_rect.center = (button_x, button_y)
-# Game loop
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            # Check if the button is clicked
-            if button_rect.collidepoint(event.pos):
-                button_clicked = True
-
-    # Clear the window
-    window.fill(WHITE)
-
-    # Draw the button
-    if button_clicked:
-        run(window, wid, hei)
-        show_success_dot = True
-
-    # Draw the success dot if the button was clicked
-    if show_success_dot:
-        pygame.draw.circle(window, success_dot_color, success_dot_position, 10)
-
-        show_success_dot = False
-
-    # Draw the button rectangle
-    pygame.draw.rect(window, GREEN, button_rect)
-
-    # Update the display
-    pygame.display.update()
-
-# Quit Pygame
-pygame.quit()
-
+main()
+quit()
