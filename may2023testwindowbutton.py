@@ -1,4 +1,33 @@
 import pygame
+
+pygame.init()
+wid, hei = 800, 700
+window = pygame.display.set_mode((wid, hei))
+
+# Function to check if a point is inside a rectangle
+def point_in_rect(point, rect):
+    x, y = point
+    rx, ry, rw, rh = rect
+    return rx < x < rx + rw and ry < y < ry + rh
+
+def draw_button(window, button_rect, button_text, text_color, button_color):
+    pygame.draw.rect(window, button_color, button_rect)
+    font = pygame.font.Font(None, 30)
+    text = font.render(button_text, True, text_color)
+    text_rect = text.get_rect(center=button_rect.center)
+    window.blit(text, text_rect)
+
+def run(window, wid, hei):
+    run = True
+    clock = pygame.time.Clock()
+    fps = 60
+
+    button_rect = pygame.Rect(10, 10, 100, 50)
+    button_text = "Run Pymunk"
+    text_color = (255, 255, 255)
+    button_color = (0, 0, 255)
+#######pymunk start code
+import pygame
 import pymunk
 import pymunk.pygame_util
 import math
@@ -148,15 +177,40 @@ def run(window, wid, hei):
     wall(space, wid, hei)
     draw_options = pymunk.pygame_util.DrawOptions(window)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#pygamecode
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
                 break
-        draw(space, window, draw_options)
-        space.step(dt)
-        clock.tick(fps)
-    pygame.quit()
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                mouse_pos = pygame.mouse.get_pos()
+                if point_in_rect(mouse_pos, button_rect):
+                    # Pymunk code to be executed
+                    draw(space, window, draw_options)
+                    space.step(dt)
+                    pygame.quit()
+                    print("Running Pymunk code")
 
-if __name__ == "__main__":
-    run(window, wid, hei)
+        window.fill("white")
+        draw_button(window, button_rect, button_text, text_color, button_color)
+        pygame.display.update()
+        clock.tick(fps)
+        
+
