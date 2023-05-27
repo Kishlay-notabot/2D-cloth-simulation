@@ -37,14 +37,14 @@ def create_ball(space, radius, mass):
     shape.friction = 0.4
     return shape
 
-def add_ball(space):
-    body = pymunk.Body()
-    body.position = (500, 500)
-    shape = pymunk.Circle(body, 20)
-    shape.mass = 1
-    shape.friction = 0.7
-    space.add(body, shape)
-    return body
+# def add_ball(space):
+#     body = pymunk.Body()
+#     body.position = (500, 500)
+#     shape = pymunk.Circle(body, 20)
+#     shape.mass = 1
+#     shape.friction = 0.7
+#     space.add(body, shape)
+#     return body
 
 def create_ball_a(space, radius, mass):
     body = pymunk.Body(body_type=pymunk.Body.STATIC)
@@ -92,14 +92,34 @@ def run(window, wid, hei):
     space = space
     radius = 45
     mybod = pymunk.Body()
-    mybod.position = (300, 300)
+    for _ in range(10):
+        position -= 10
+    mybod.position = position
     shape = pymunk.Circle(mybod, radius)
     shape.mass = 12
     shape.color = (55, 34, 57, 123)
-    space.add(mybod, shape)
+    space.add(mybod, shape, position)
     shape.elasticity = 0.9
     shape.friction = 0.4
     space.add(pymunk.DampedSpring(shape.body, joina.body, (0, 0), (0, 0), 65, 90, 0))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     #DO NOT CHANGE BELOW
 
     # j = pymunk.DampedSpring(big_ball.body, joina.body, (0, 0), (0, 0), 5, 70, 0)
