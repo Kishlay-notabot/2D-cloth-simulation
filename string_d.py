@@ -99,47 +99,6 @@ def run(window, wid, hei):
     space.add(mybod, shape)
     shape.elasticity = 0.9
     shape.friction = 0.4
-    
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     #DO NOT CHANGE BELOW
     j = pymunk.DampedSpring(big_ball.body, joina.body, (0, 0), (0, 0), 5, 70, 0)
