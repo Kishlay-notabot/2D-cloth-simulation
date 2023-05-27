@@ -94,15 +94,17 @@ def run(window, wid, hei):
     mybod = pymunk.Body()
     mybod.position = (300, 300)
     shape = pymunk.Circle(mybod, radius)
-    shape.mass = 1
+    shape.mass = 12
     shape.color = (55, 34, 57, 123)
     space.add(mybod, shape)
     shape.elasticity = 0.9
     shape.friction = 0.4
-
+    space.add(pymunk.DampedSpring(shape.body, joina.body, (0, 0), (0, 0), 65, 90, 0))
     #DO NOT CHANGE BELOW
-    j = pymunk.DampedSpring(big_ball.body, joina.body, (0, 0), (0, 0), 5, 70, 0)
-    space.add(j)
+
+    # j = pymunk.DampedSpring(big_ball.body, joina.body, (0, 0), (0, 0), 5, 70, 0)
+    # space.add(j) 
+    # REMOVED THIS UPPER TEST BODY
     space.add(pymunk.DampedSpring(big_ball.body, joinb.body, (0, 0), (0, 0), 100, 100, 10))
     wall(space, wid, hei)
     draw_options = pymunk.pygame_util.DrawOptions(window)
