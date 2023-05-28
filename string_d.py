@@ -92,8 +92,6 @@ def run(window, wid, hei):
     space = space
     radius = 45
     mybod = pymunk.Body()
-    for _ in range(10):
-        position -= 10
     mybod.position = position
     shape = pymunk.Circle(mybod, radius)
     shape.mass = 12
@@ -102,9 +100,6 @@ def run(window, wid, hei):
     shape.elasticity = 0.9
     shape.friction = 0.4
     space.add(pymunk.DampedSpring(shape.body, joina.body, (0, 0), (0, 0), 65, 90, 0))
-
-
-
 
 
 
