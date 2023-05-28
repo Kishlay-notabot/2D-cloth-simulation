@@ -88,7 +88,7 @@ def run(window, wid, hei):
 
 
     #May 27 continued test
-    #INDEPENDENT BODY WITHOUT PREDEFINED
+    #INDEPENDENT BODY WITHOUT PREDEFINED FUNCTION
     space = space
     radius = 45
     mybod = pymunk.Body()
