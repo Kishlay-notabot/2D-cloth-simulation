@@ -93,6 +93,7 @@ def run(window, wid, hei):
     radius = 45
     mybod = pymunk.Body()
     mybod.position = position
+
     shape = pymunk.Circle(mybod, radius)
     shape.mass = 12
     shape.color = (55, 34, 57, 123)
