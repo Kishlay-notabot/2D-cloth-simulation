@@ -61,19 +61,6 @@ def create_ball_a(space, xloc, yloc):
     shape.elasticity = 0.9
     shape.friction = 0.4
     return shape
-
-def create_ball_b(space, xloc, yloc):
-    radius = 5
-    mass = 10
-    body = pymunk.Body(body_type=pymunk.Body.STATIC)
-    body.position = (xloc, yloc)
-    shape = pymunk.Circle(body, radius)
-    shape.mass = mass
-    shape.color = (0, 0, 0, 100)
-    space.add(body, shape)
-    shape.elasticity = 0.9
-    shape.friction = 0.4
-    return shape
 # def add_spring(var1, var2):
 #     dlx = pymunk.DampedSpring(var1, var2, (0, 0), (0, 0), 5, 70, 0)
 #     space.add(dlx)
@@ -89,7 +76,7 @@ def run(window, wid, hei):
     space.gravity = (0, 981)
     big_ball = create_ball(space, 30, 10)
     joina = create_ball_a(space, 700, 100)
-    joinb = create_ball_b(space, 100, 100)
+    # joinb = create_ball_b(space, 100, 100)
     space.add(pymunk.DampedSpring(big_ball.body, joina.body, (0, 0), (0, 0), 10, 100, 110))
     wall(space, wid, hei)
     draw_options = pymunk.pygame_util.DrawOptions(window)
