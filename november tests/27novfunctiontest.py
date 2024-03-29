@@ -49,6 +49,21 @@ def add_ball(space):
     space.add(body, shape)
     return body
 
+
+def create_top_line(space, num_balls, spacing):
+    top_line = []
+    start_x = 50    
+    start_y = 50   
+    
+    for i in range(num_balls):
+        x = start_x + i * spacing
+        y = start_y
+        ball_a = create_ball_a(space, x, y)
+        top_line.append(ball_a)
+    
+    return top_line
+
+
 def create_ball_a(space, xloc, yloc):
     radius = 5
     mass = 10
@@ -66,7 +81,6 @@ def create_ball_a(space, xloc, yloc):
 #     space.add(dlx)
 
 # next task to make a function to initiate grid plotting of objects and also work with connection of constrains, also changing the constraint color or view 
-
 def run(window, wid, hei):
     running = True
     clock = pygame.time.Clock()
@@ -74,10 +88,12 @@ def run(window, wid, hei):
     dt = 1 / fps
     space = pymunk.Space()
     space.gravity = (0, 981)
-    big_ball = create_ball(space, 1, 10)
-    joina = create_ball_a(space, 700, 100)
-    # joinb = create_ball_b(space, 100, 100)
-    space.add(pymunk.DampedSpring(big_ball.body, joina.body, (0, 0), (0, 0), 10, 100, 110))
+    big_ball = create_ball(space, 20, 10)
+    
+    # Create grid of create_ball_a objects
+    top_line = create_top_line(space, num_balls=10, spacing=40)
+ 
+    
     wall(space, wid, hei)
     draw_options = pymunk.pygame_util.DrawOptions(window)
 
