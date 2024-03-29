@@ -74,7 +74,7 @@ def run(window, wid, hei):
     dt = 1 / fps
     space = pymunk.Space()
     space.gravity = (0, 981)
-    big_ball = create_ball(space, 30, 10)
+    big_ball = create_ball(space, 1, 10)
     joina = create_ball_a(space, 700, 100)
     # joinb = create_ball_b(space, 100, 100)
     space.add(pymunk.DampedSpring(big_ball.body, joina.body, (0, 0), (0, 0), 10, 100, 110))
