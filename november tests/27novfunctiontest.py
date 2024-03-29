@@ -15,8 +15,10 @@ def draw(space, window, draw_options):
 
 def wall(space, wid, hei):
     rects = [
-        [(wid/2, hei - 10), (wid, 20)],
-        [(wid/2, 10), (wid, 20)]
+        [(wid/2, hei - 10), (wid, 20)],   # Bottom wall
+        [(wid/2, 10), (wid, 20)],         # Top wall
+        [(10, hei/2), (20, hei)],         # Left wall
+        [(wid - 10, hei/2), (20, hei)]    # Right wall
     ]
     for pos, size in rects:
         body = pymunk.Body(body_type=pymunk.Body.STATIC)
@@ -25,6 +27,7 @@ def wall(space, wid, hei):
         shape.elasticity = 0.4
         shape.friction = 0.5
         space.add(body, shape)
+
 
 def create_ball(space, radius, mass):
     body = pymunk.Body()
@@ -87,7 +90,7 @@ def run(window, wid, hei):
     big_ball = create_ball(space, 30, 10)
     joina = create_ball_a(space, 700, 100)
     joinb = create_ball_b(space, 100, 100)
-    space.add(pymunk.DampedSpring(big_ball.body, joina.body, (0, 0), (0, 0), 10, 10, 10))
+    space.add(pymunk.DampedSpring(big_ball.body, joina.body, (0, 0), (0, 0), 10, 100, 110))
     wall(space, wid, hei)
     draw_options = pymunk.pygame_util.DrawOptions(window)
 
