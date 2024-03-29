@@ -46,10 +46,9 @@ def add_ball(space):
     space.add(body, shape)
     return body
 
-def create_ball_a(xloc, yloc):
+def create_ball_a(space, xloc, yloc):
     radius = 5
     mass = 10
-    space = pymunk.Space()
     body = pymunk.Body(body_type=pymunk.Body.STATIC)
     body.position = (xloc, yloc)
     shape = pymunk.Circle(body, radius)
@@ -59,11 +58,10 @@ def create_ball_a(xloc, yloc):
     shape.elasticity = 0.9
     shape.friction = 0.4
     return shape
-# ---- novmeber update simplified functions just to have 2 parameters of x and y location
-def create_ball_b(xloc, yloc):
-    radius = 20
+
+def create_ball_b(space, xloc, yloc):
+    radius = 5
     mass = 10
-    space = pymunk.Space()
     body = pymunk.Body(body_type=pymunk.Body.STATIC)
     body.position = (xloc, yloc)
     shape = pymunk.Circle(body, radius)
@@ -80,25 +78,23 @@ def create_ball_b(xloc, yloc):
 # next task to make a function to initiate grid plotting of objects and also work with connection of constrains, also changing the constraint color or view 
 
 def run(window, wid, hei):
-    run = True
+    running = True
     clock = pygame.time.Clock()
     fps = 60
     dt = 1 / fps
     space = pymunk.Space()
     space.gravity = (0, 981)
     big_ball = create_ball(space, 30, 10)
-    joina = create_ball_a(700, 100)
-    joinb = create_ball_b(100, 100)
-    j = pymunk.DampedSpring(joinb.body, joina.body, (0, 0), (0, 0), 1, 100, 0)
-    space.add(j)
-    # space.add(pymunk.DampedSpring(big_ball.body, joinb.body, (0, 0), (0, 0), 100, 100, 10))
+    joina = create_ball_a(space, 700, 100)
+    joinb = create_ball_b(space, 100, 100)
+    space.add(pymunk.DampedSpring(big_ball.body, joina.body, (0, 0), (0, 0), 10, 10, 10))
     wall(space, wid, hei)
     draw_options = pymunk.pygame_util.DrawOptions(window)
 
-    while run:
+    while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
+                running = False
                 break
         draw(space, window, draw_options)
         space.step(dt)

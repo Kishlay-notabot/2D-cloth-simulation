@@ -112,7 +112,7 @@ def run(window, wid, hei):
 
 
 
-
+# 29 march 2024 string_d is main and 27 nov test is copy?
 
 
 
